@@ -463,7 +463,7 @@
 	});
 
 const CALENDAR_ICS_URL =
-  "https://calendar.google.com/calendar/ical/tacomaeuchre%40gmail.com/public/basic.ics";
+  "https://cors.isomorphic-git.org/https://calendar.google.com/calendar/ical/tacomaeuchre%40gmail.com/public/basic.ics";
 
 fetch(CALENDAR_ICS_URL)
   .then(res => res.text())
@@ -522,7 +522,7 @@ function renderEvent(eventText) {
   if (description && description.startsWith("ALERT:")) {
     const alert = document.getElementById("event-alert");
     banner.textContent = description.replace("ALERT:", "").trim();
-    banner.hidden = false;
+    alert.hidden = false;
   }
 
   document.getElementById("calendar-link").href =
