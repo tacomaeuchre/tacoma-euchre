@@ -490,14 +490,23 @@ fetch(CALENDAR_ICS_URL)
   });
 
 function parseICSDate(icsDate) {
-  // Example: 20250315T020000Z
-  const year = icsDate.slice(0, 4);
-  const month = icsDate.slice(4, 6) - 1;
-  const day = icsDate.slice(6, 8);
-  const hour = icsDate.slice(9, 11);
-  const minute = icsDate.slice(11, 13);
+  // Original ICS format: 20250315T020000Z
+  
+  // Format the ICS date string into a standard ISO format for reliable Date parsing:
+  // e.g., "2025-03-15T02:00:00Z"
+  const isoDateString = 
+    icsDate.slice(0, 4) + '-' +  // YYYY
+    icsDate.slice(4, 6) + '-' +  // MM
+    icsDate.slice(6, 8) +        // DD
+    'T' +
+    icsDate.slice(9, 11) + ':' + // HH
+    icsDate.slice(11, 13) + ':' +// MM
+    icsDate.slice(13, 15) +      // SS
+    icsDate.slice(15);           // Z (or other timezone info)
 
-  return new Date(Date.UTC(year, month, day, hour, minute));
+  // Use the Date constructor, which is more robust with the standard format.
+  // It handles the 'Z' (UTC) correctly and will convert it to the local timezone.
+  return new Date(isoDateString);
 }
 
 function renderEvent(eventText) {
