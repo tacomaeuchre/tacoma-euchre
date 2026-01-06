@@ -818,16 +818,16 @@ h1, h2, h3, h4, h5, h6 {
 
 .btn {
   text-transform: uppercase;
+  text-decoration: none !important;
   letter-spacing: 2px;
   -webkit-transition: 0.3s;
   -o-transition: 0.3s;
   transition: 0.3s;
 }
 .btn.btn-primary {
-  background: #8C7676;
+  background: transparent;
   color: #fff;
-  border: none !important;
-  border: 2px solid transparent !important;
+  border: 2px solid #fff;
 }
 .btn.btn-primary:hover, .btn.btn-primary:active, .btn.btn-primary:focus {
   box-shadow: none;
