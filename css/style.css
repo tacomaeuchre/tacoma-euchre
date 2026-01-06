@@ -976,4 +976,9 @@ h1, h2, h3, h4, h5, h6 {
   margin-bottom: 1rem;
   font-weight: 600;
 }
+/* Styling for the next meet-up time to make it larger */
+#event-datetime {
+    font-weight: bold;
+    font-size: 1.75em; /* You can adjust this value (e.g., 2.0em) to make it larger or smaller */
+}
 /*# sourceMappingURL=style.css.map */
