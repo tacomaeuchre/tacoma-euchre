@@ -526,8 +526,34 @@ h1, h2, h3, h4, h5, h6 {
 .core-features .grid2 {
   width: 50%;
   background-size: cover;
-  background-position: center center;
+  /* From previous fix: ensures the top of the image is visible */
+  background-position: center top; 
   position: relative;
+  /* NEW: Ensures padding is inside the 50% width */
+  box-sizing: border-box; 
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+/* NEW: Creates a 30px buffer on the left of the Jack of Spades image column */
+.core-features .grid2:first-child {
+  /* This creates the buffer from the window/container edge */
+  margin-left: 30px; 
+  /* We must reduce the width by the same amount to keep the layout from overflowing */
+  width: calc(50% - 30px); 
+}
+
+/* * Optional: You may also need to adjust the width of the second column 
+* to ensure it takes up the remaining space and centers the layout correctly.
+* If the right column looks too wide, add this:
+*/
+.core-features .grid2:last-child {
+  width: calc(50% - 30px); 
+}
+/* Optional: Since grid2 goes to 100% on small screens, remove the buffer when the screen is small */
+@media screen and (max-width: 768px) {
+  .core-features .grid2:first-child {
+    padding-left: 0; 
+  }
 }
 @media screen and (max-width: 768px) {
   .core-features .grid2 {
@@ -651,7 +677,7 @@ h1, h2, h3, h4, h5, h6 {
   font-size: 40px;
   font-weight: 400;
   position: relative;
-  padding-bottom: 10px;
+  padding-bottom: 0px;
   line-height: 1.5;
 }
 @media screen and (max-width: 768px) {
