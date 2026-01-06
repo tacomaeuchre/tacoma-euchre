@@ -462,6 +462,8 @@
 
 	});
 
+// --- GOOGLE CALENDAR LOGIC STARTS HERE (FINAL STABLE VERSION) ---
+
 const CALENDAR_ICS_URL =
   "https://api.allorigins.win/raw?url=https://calendar.google.com/calendar/ical/tacomaeuchre%40gmail.com/public/basic.ics";
 
@@ -474,11 +476,14 @@ fetch(CALENDAR_ICS_URL)
     let nextEvent = null;
 
     for (const event of events) {
-      const startMatch = event.match(/DTSTART:(.+)/);
-      if (!startMatch) continue;
+      const startString = getField(event, "DTSTART");
+      
+      if (!startString) continue;
 
-      const start = parseICSDate(startMatch[1].trim());
-      if (start > now) {
+      const start = parseICSDate(startString);
+      
+      // Ensure the date is valid AND in the future
+      if (start instanceof Date && !isNaN(start.getTime()) && start > now) {
         nextEvent = event;
         break;
       }
@@ -490,14 +495,10 @@ fetch(CALENDAR_ICS_URL)
   });
 
 /**
- * FIX: Updated parseICSDate to use standard ISO 8601 formatting for reliable Date object creation.
- * This correctly handles the UTC 'Z' timezone marker from the ICS file.
+ * Parses the ICS date string (YYYYMMDDTHHMMSS) into a local Date object.
  */
 function parseICSDate(icsDate) {
-  // ICS format example: 20250315T020000Z
-  
-  // Format the ICS date string into a standard ISO format for reliable Date parsing:
-  // e.g., "2025-03-15T02:00:00Z"
+  // Format to standard ISO local time string: YYYY-MM-DDTHH:MM:SS
   const isoDateString = 
     icsDate.slice(0, 4) + '-' +    // YYYY
     icsDate.slice(4, 6) + '-' +    // MM
@@ -505,10 +506,8 @@ function parseICSDate(icsDate) {
     'T' +
     icsDate.slice(9, 11) + ':' +   // HH
     icsDate.slice(11, 13) + ':' +  // MM
-    icsDate.slice(13, 15) +        // SS
-    icsDate.slice(15);             // Z (or other timezone info)
+    icsDate.slice(13, 15);         // SS
 
-  // Use the Date constructor, which is more robust with the standard format.
   return new Date(isoDateString);
 }
 
@@ -518,37 +517,81 @@ function renderEvent(eventText) {
   const location = getField(eventText, "LOCATION");
   const description = getField(eventText, "DESCRIPTION");
   const start = parseICSDate(getField(eventText, "DTSTART"));
+  
+  // --- FINAL LINK FIX: Link directly to the public Google Calendar URL ---
+  // This URL is stable and bypasses the problematic event ID generation.
+  const eventLink = `https://calendar.google.com/calendar/u/0/r?src=tacomaeuchre%40gmail.com`;
+  // --- END LINK FIX ---
 
-  // toLocaleString converts the UTC time to the user's local timezone (PST/PDT for Tacoma)
-  document.getElementById("event-datetime").textContent =
-    start.toLocaleString(undefined, {
-      weekday: "long",
-      month: "long",
-      day: "numeric",
-      hour: "numeric",
-      minute: "2-digit"
-    });
-
-  if (location) {
-    document.getElementById("event-location").textContent = location;
+  // Update the event details on the page
+  const datetimeElement = document.getElementById("event-datetime");
+  if (datetimeElement) {
+    datetimeElement.textContent =
+      start.toLocaleString(undefined, {
+        weekday: "long",
+        month: "long",
+        day: "numeric",
+        hour: "numeric",
+        minute: "2-digit"
+      });
   }
+
+  // --- LOCATION PARSING AND CONDITIONAL LINKING ---
+  const locationElement = document.getElementById("event-location");
+  
+  if (location && locationElement) {
+    let cleanedLocationDisplay = location.replace(/\\/g, ''); 
+    cleanedLocationDisplay = cleanedLocationDisplay.replace(', USA', '').trim();
+
+    const firstCommaIndex = cleanedLocationDisplay.indexOf(',');
+    
+    let venueName = cleanedLocationDisplay;
+    let addressPart = '';
+
+    if (firstCommaIndex !== -1) {
+        venueName = cleanedLocationDisplay.substring(0, firstCommaIndex).trim(); 
+        addressPart = cleanedLocationDisplay.substring(firstCommaIndex).trim(); 
+    }
+
+    const isDoyles = venueName.toLowerCase().includes("doyle's public house");
+
+    // The map link for Doyles (or a Google search for others)
+    const mapLink = isDoyles ? "https://maps.app.goo.gl/pfMvcSYexrp4oYuZ9" : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(cleanedLocationDisplay)}`;
+    let locationHTML;
+
+    if (isDoyles) {
+        locationHTML = `<a href="${mapLink}" target="_blank">${venueName}</a>${addressPart}`;
+    } else {
+        locationHTML = `${venueName}${addressPart}`;
+    }
+
+    locationElement.innerHTML = locationHTML;
+  }
+  // --- END LOCATION FIX ---
 
   if (description && description.startsWith("ALERT:")) {
     const alert = document.getElementById("event-alert");
-    // Renamed 'banner' to 'alert' based on your index.html ID
-    alert.textContent = description.replace("ALERT:", "").trim(); 
-    alert.hidden = false;
+    if (alert) {
+      alert.textContent = description.replace("ALERT:", "").trim(); 
+      alert.hidden = false;
+    }
   }
   
-  // The calendar link URL uses the ICS URL, which is correct for importing to Google Calendar
-  document.getElementById("calendar-link").href =
-    "https://calendar.google.com/calendar/u/0?cid=" +
-    encodeURIComponent(CALENDAR_ICS_URL);
+  // Update the main event link
+  const calendarLinkElement = document.getElementById("calendar-link");
+  if (calendarLinkElement) {
+    calendarLinkElement.href = eventLink;
+    calendarLinkElement.textContent = "View All Events"; 
+  }
 }
 
+/**
+ * Extracts a field value from the ICS text, ignoring field parameters like TZID.
+ */
 function getField(text, field) {
-  const match = text.match(new RegExp(field + ":(.+?)(\\r\\n|\\n)"));
-  // Use a non-greedy match (.*?) to correctly handle fields that span multiple lines and ensure we capture only the value.
-  return match ? match[1].replace(/\\n/g, " ").trim() : "";
+  // Regex: Find field, ignore parameters, capture value
+  const match = text.match(new RegExp(field + "(?:;[^:]+)*:([^\\r\\n]+)", "i"));
+  
+  return match && match[1] ? match[1].trim().replace(/\\n/g, " ") : "";
 }
 }());
