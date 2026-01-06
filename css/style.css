@@ -42,7 +42,7 @@ h1, h2, h3, h4, h5, h6 {
   color: #fff;
   font-family: "Inconsolata", Arial, sans-serif;
   font-weight: 400;
-  margin: 0 0 30px 0;
+  margin: 0 0 0px 0;
 }
 
 ::-webkit-selection {
@@ -296,9 +296,9 @@ h1, h2, h3, h4, h5, h6 {
   vertical-align: middle;
 }
 #fh5co-home .text-inner h1 {
-  font-size: 60px;
+  font-size: 72px;
   color: white;
-  margin: 0 0 30px 0;
+  margin: 30px 0 30px 0;
   font-weight: 700;
   line-height: 58px;
 }
@@ -315,7 +315,7 @@ h1, h2, h3, h4, h5, h6 {
   line-height: 30px;
   font-weight: 300;
   color: rgba(255, 255, 255, 0.8);
-  margin: 0 0 60px 0;
+  margin: 0 0 0px 0;
 }
 
 #fh5co-services,
@@ -379,7 +379,7 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 .fh5co-project .project-grid .desc h3 {
-  margin-bottom: 10px;
+  margin-bottom: 0px;
 }
 .fh5co-project .project-grid .desc h3 a {
   color: #fff;
@@ -564,10 +564,10 @@ h1, h2, h3, h4, h5, h6 {
   padding: 40px;
 }
 .core-features .grid2 .core-f h3 {
-  margin-bottom: 10px;
+  margin-bottom: 0px;
 }
 .core-features .grid2 .core-f .core {
-  margin-bottom: 2em;
+  margin-bottom: 1em;
 }
 .core-features .grid2 .core-f .core i {
   float: left;
@@ -638,7 +638,7 @@ h1, h2, h3, h4, h5, h6 {
   border-radius: 50%;
 }
 #fh5co-team .team-box h3 {
-  margin-bottom: 10px;
+  margin-bottom: 00px;
   font-weight: 700;
 }
 #fh5co-team .team-box .position {
@@ -691,7 +691,7 @@ h1, h2, h3, h4, h5, h6 {
   line-height: 1.5;
   position: relative;
   display: block;
-  padding-bottom: 30px;
+  padding-bottom: 00px;
 }
 @media screen and (max-width: 768px) {
   .section-heading h3 {
@@ -976,9 +976,10 @@ h1, h2, h3, h4, h5, h6 {
   margin-bottom: 1rem;
   font-weight: 600;
 }
-/* Styling for the next meet-up time to make it larger */
+/* Styling to reduce the gap between the time and the location */
 #event-datetime {
     font-weight: bold;
-    font-size: 1.75em; /* You can adjust this value (e.g., 2.0em) to make it larger or smaller */
+    font-size: 1.3em;
+    margin-bottom: 0.2em; /* Added this line to reduce the space below the time */
 }
 /*# sourceMappingURL=style.css.map */
