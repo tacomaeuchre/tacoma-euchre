@@ -463,7 +463,7 @@
 	});
 
 const CALENDAR_ICS_URL =
-  "https://cors.isomorphic-git.org/https://calendar.google.com/calendar/ical/tacomaeuchre%40gmail.com/public/basic.ics";
+  "https://api.allorigins.win/raw?url=https://calendar.google.com/calendar/ical/tacomaeuchre%40gmail.com/public/basic.ics";
 
 fetch(CALENDAR_ICS_URL)
   .then(res => res.text())
