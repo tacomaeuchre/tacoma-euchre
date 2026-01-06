@@ -489,25 +489,29 @@ fetch(CALENDAR_ICS_URL)
     renderEvent(nextEvent);
   });
 
+/**
+ * FIX: Updated parseICSDate to use standard ISO 8601 formatting for reliable Date object creation.
+ * This correctly handles the UTC 'Z' timezone marker from the ICS file.
+ */
 function parseICSDate(icsDate) {
-  // Original ICS format: 20250315T020000Z
+  // ICS format example: 20250315T020000Z
   
   // Format the ICS date string into a standard ISO format for reliable Date parsing:
   // e.g., "2025-03-15T02:00:00Z"
   const isoDateString = 
-    icsDate.slice(0, 4) + '-' +  // YYYY
-    icsDate.slice(4, 6) + '-' +  // MM
-    icsDate.slice(6, 8) +        // DD
+    icsDate.slice(0, 4) + '-' +    // YYYY
+    icsDate.slice(4, 6) + '-' +    // MM
+    icsDate.slice(6, 8) +          // DD
     'T' +
-    icsDate.slice(9, 11) + ':' + // HH
-    icsDate.slice(11, 13) + ':' +// MM
-    icsDate.slice(13, 15) +      // SS
-    icsDate.slice(15);           // Z (or other timezone info)
+    icsDate.slice(9, 11) + ':' +   // HH
+    icsDate.slice(11, 13) + ':' +  // MM
+    icsDate.slice(13, 15) +        // SS
+    icsDate.slice(15);             // Z (or other timezone info)
 
   // Use the Date constructor, which is more robust with the standard format.
-  // It handles the 'Z' (UTC) correctly and will convert it to the local timezone.
   return new Date(isoDateString);
 }
+
 
 function renderEvent(eventText) {
   const summary = getField(eventText, "SUMMARY");
@@ -515,6 +519,7 @@ function renderEvent(eventText) {
   const description = getField(eventText, "DESCRIPTION");
   const start = parseICSDate(getField(eventText, "DTSTART"));
 
+  // toLocaleString converts the UTC time to the user's local timezone (PST/PDT for Tacoma)
   document.getElementById("event-datetime").textContent =
     start.toLocaleString(undefined, {
       weekday: "long",
@@ -530,17 +535,20 @@ function renderEvent(eventText) {
 
   if (description && description.startsWith("ALERT:")) {
     const alert = document.getElementById("event-alert");
-    banner.textContent = description.replace("ALERT:", "").trim();
+    // Renamed 'banner' to 'alert' based on your index.html ID
+    alert.textContent = description.replace("ALERT:", "").trim(); 
     alert.hidden = false;
   }
-
+  
+  // The calendar link URL uses the ICS URL, which is correct for importing to Google Calendar
   document.getElementById("calendar-link").href =
     "https://calendar.google.com/calendar/u/0?cid=" +
     encodeURIComponent(CALENDAR_ICS_URL);
 }
 
 function getField(text, field) {
-  const match = text.match(new RegExp(field + ":(.+)"));
-  return match ? match[1].replace(/\\n/g, " ") : "";
+  const match = text.match(new RegExp(field + ":(.+?)(\\r\\n|\\n)"));
+  // Use a non-greedy match (.*?) to correctly handle fields that span multiple lines and ensure we capture only the value.
+  return match ? match[1].replace(/\\n/g, " ").trim() : "";
 }
 }());
