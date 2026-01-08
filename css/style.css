@@ -984,31 +984,4 @@ h1, h2, h3, h4, h5, h6 {
     font-size: 1.3em;
     margin-bottom: 0.2em; /* Added this line to reduce the space below the time */
 }
-/* ====================================
-   MOBILE SPACING FIX (Max Width 768px)
-   ==================================== */
-
-@media screen and (max-width: 768px) {
-    /* 1. Force the main hero section to have a large bottom space. */
-    /* This pushes the content of the home section away from the services section below it. */
-    #fh5co-home {
-        padding-bottom: 5em !important; 
-    }
-    
-    /* 2. Ensure the services section (Jack of Spades/Links) also has a large top space. */
-    #fh5co-services {
-        padding-top: 5em !important;
-        padding-bottom: 5em !important; 
-    }
-    
-    /* 3. Address the inner container wrap for good measure, often needed in these templates. */
-    .fh5co-services {
-        padding-top: 0 !important;
-    }
-    
-    /* 4. Ensure the body text container is not collapsing too much on its own */
-    #fh5co-home .text-wrap {
-        padding-bottom: 20px !important;
-    }
-}
 /*# sourceMappingURL=style.css.map */
