@@ -1008,4 +1008,36 @@ h1, h2, h3, h4, h5, h6 {
         padding-right: 1em !important;  
     }
 }
+@media screen and (max-width: 768px) {
+  #fh5co-services {
+    border-top: 1px solid rgba(255,255,255,0.15);
+    margin-top: 2em;
+  }
+}
+@media screen and (max-width: 768px) {
+  .core-features {
+    display: block;
+  }
+
+  /* Jack of Spades image */
+  .core-features .grid2:first-child {
+    width: 100%;
+    height: 80px;                 /* SMALL on purpose */
+    margin: 0 auto 2em auto;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0.4;                 /* divider vibe */
+  }
+
+  /* Text column */
+  .core-features .grid2:last-child {
+    width: 100%;
+  }
+}
+@media screen and (max-width: 768px) {
+  .core-features .grid2 .core-f {
+    padding: 20px 10px;
+  }
+}
 /*# sourceMappingURL=style.css.map */
