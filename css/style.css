@@ -989,17 +989,26 @@ h1, h2, h3, h4, h5, h6 {
    ==================================== */
 
 @media screen and (max-width: 768px) {
-    /* Increases the vertical padding around the "Jack of Spades" and "Helpful Links" section */
-    #fh5co-services {
-        padding-top: 4em !important;    /* Adds space above the Jack of Spades/Links */
-        padding-bottom: 4em !important; /* Adds space below the Jack of Spades/Links */
-        padding-left: 1em !important;   /* Ensures there's a small horizontal margin */
-        padding-right: 1em !important;  
+    /* 1. Force the main hero section to have a large bottom space. */
+    /* This pushes the content of the home section away from the services section below it. */
+    #fh5co-home {
+        padding-bottom: 5em !important; 
     }
     
-    /* You might also need to ensure the main home section has a bottom margin */
-    #fh5co-home {
-        padding-bottom: 2em; /* Adds space at the very bottom of the body text section */
+    /* 2. Ensure the services section (Jack of Spades/Links) also has a large top space. */
+    #fh5co-services {
+        padding-top: 5em !important;
+        padding-bottom: 5em !important; 
+    }
+    
+    /* 3. Address the inner container wrap for good measure, often needed in these templates. */
+    .fh5co-services {
+        padding-top: 0 !important;
+    }
+    
+    /* 4. Ensure the body text container is not collapsing too much on its own */
+    #fh5co-home .text-wrap {
+        padding-bottom: 20px !important;
     }
 }
 /*# sourceMappingURL=style.css.map */
