@@ -1,4 +1,4 @@
-@font-face {
+my@font-face {
   font-family: 'icomoon';
   src: url("../fonts/icomoon/icomoon.eot?srf3rx");
   src: url("../fonts/icomoon/icomoon.eot?srf3rx#iefix") format("embedded-opentype"), url("../fonts/icomoon/icomoon.ttf?srf3rx") format("truetype"), url("../fonts/icomoon/icomoon.woff?srf3rx") format("woff"), url("../fonts/icomoon/icomoon.svg?srf3rx#icomoon") format("svg");
@@ -1014,6 +1014,14 @@ h1, h2, h3, h4, h5, h6 {
 @media screen and (max-width: 768px) {
   .core-features .grid2 .core-f {
     padding: 20px 10px;
+  }
+}
+@media screen and (max-width: 768px) {
+  #fh5co-home,
+  #fh5co-home .text-wrap {
+    height: auto !important;
+    min-height: 100vh; /* optional but nice */
+    padding-bottom: 3em;
   }
 }
 /*# sourceMappingURL=style.css.map */
