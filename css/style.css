@@ -308,6 +308,7 @@ h1, h2, h3, h4, h5, h6 {
 @media screen and (max-width: 768px) {
   #fh5co-home .text-inner h1 {
     font-size: 40px;
+    padding-bottom: 2em;
   }
 }
 #fh5co-home .text-inner h2 {
