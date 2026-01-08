@@ -316,7 +316,7 @@ h1, h2, h3, h4, h5, h6 {
   line-height: 30px;
   font-weight: 300;
   color: rgba(255, 255, 255, 0.8);
-  margin: 0 0 200px 0;
+  margin: 0 0 0px 0;
 }
 
 #fh5co-services,
@@ -983,31 +983,7 @@ h1, h2, h3, h4, h5, h6 {
     font-weight: bold;
     font-size: 1.3em;
     margin-bottom: 0.2em; /* Added this line to reduce the space below the time */
-}
-/* ====================================
-   MOBILE SPACING FIX (Max Width 768px)
-   This aggressively increases the space between sections on phones.
-   ==================================== */
-
-@media screen and (max-width: 768px) {
-    
-    /* 1. Increase the bottom space of the main text section (fh5co-home) */
-    #fh5co-home {
-        padding-bottom: 7em !important; /* Large gap below the main text content */
-    }
-    
-    /* 2. Force a large top margin AND top padding on the services section 
-       to guarantee it is pushed down and has internal space. */
-    #fh5co-services {
-        margin-top: 5em !important;     /* Pushes the entire section down from the body text */
-        padding-top: 4em !important;    /* Internal space above the content */
-        
-        /* Retain large bottom padding and small side margins */
-        padding-bottom: 4em !important; 
-        padding-left: 1em !important;   
-        padding-right: 1em !important;  
-    }
-}
+} 
 @media screen and (max-width: 768px) {
   #fh5co-services {
     border-top: 1px solid rgba(255,255,255,0.15);
