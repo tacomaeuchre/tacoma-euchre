@@ -982,4 +982,22 @@ h1, h2, h3, h4, h5, h6 {
     font-size: 1.3em;
     margin-bottom: 0.2em; /* Added this line to reduce the space below the time */
 }
+/* ====================================
+   MOBILE SPACING FIX (Max Width 768px)
+   ==================================== */
+
+@media screen and (max-width: 768px) {
+    /* Increases the vertical padding around the "Jack of Spades" and "Helpful Links" section */
+    #fh5co-services {
+        padding-top: 4em !important;    /* Adds space above the Jack of Spades/Links */
+        padding-bottom: 4em !important; /* Adds space below the Jack of Spades/Links */
+        padding-left: 1em !important;   /* Ensures there's a small horizontal margin */
+        padding-right: 1em !important;  
+    }
+    
+    /* You might also need to ensure the main home section has a bottom margin */
+    #fh5co-home {
+        padding-bottom: 2em; /* Adds space at the very bottom of the body text section */
+    }
+}
 /*# sourceMappingURL=style.css.map */
